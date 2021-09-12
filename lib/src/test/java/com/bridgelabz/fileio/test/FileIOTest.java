@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.bridgelabz.fileio.main.FileSystem;
+import com.bridgelabz.fileio.main.JavaWatchService;
 
 public class FileIOTest {
 
@@ -27,26 +28,33 @@ public class FileIOTest {
 			FileSystem.deleteFiles(checkPath.toFile());
 		}
 		Assert.assertFalse(Files.exists(checkPath));
-		
+
 		Files.createDirectory(checkPath);
 		Assert.assertTrue(Files.exists(checkPath));
-		
+
 		IntStream.range(1, 10).forEach(n -> {
-			Path tempFile = Paths.get(checkPath+"/temp"+n);
+			Path tempFile = Paths.get(checkPath + "/temp" + n);
 			Assert.assertTrue(Files.notExists(tempFile));
 			try {
 				Files.createFile(tempFile);
-			}
-			catch(IOException e){
-				
+			} catch (IOException e) {
+
 			}
 			Assert.assertTrue(Files.exists(tempFile));
 		});
-		
+
 		Files.list(checkPath).filter(Files::isRegularFile).forEach(System.out::println);
 		Files.newDirectoryStream(checkPath).forEach(System.out::println);
-		Files.newDirectoryStream(checkPath, n -> n.toFile().isFile() && n.toString().startsWith("temp")).forEach(System.out::println);
-		
+		Files.newDirectoryStream(checkPath, n -> n.toFile().isFile() && n.toString().startsWith("temp"))
+				.forEach(System.out::println);
+
+	}
+
+	@Test
+	public void directoryWatchListAllActivities() throws IOException {
+		Path dir = Paths.get(userHome + "/" + fileName);
+		Files.list(dir).filter(Files::isRegularFile).forEach(System.out::println);
+		new JavaWatchService(dir).processEvents();
 	}
 
 }
