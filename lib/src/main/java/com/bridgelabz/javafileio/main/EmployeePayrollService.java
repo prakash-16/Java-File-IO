@@ -1,7 +1,10 @@
 package com.bridgelabz.javafileio.main;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.google.common.io.Files;
 
 public class EmployeePayrollService {
 
@@ -47,6 +50,13 @@ public class EmployeePayrollService {
 		if(ioService.equals(IOService.FILE_IO)) {
 			new EmployeePayrollServiceIO().printData();
 		}
+	}
+	
+	public int countEntry(IOService ioService) {
+		if(ioService.equals(IOService.FILE_IO)) {
+			return new EmployeePayrollServiceIO().countEntry();
+		}
+		return 0;
 	}
 
 }

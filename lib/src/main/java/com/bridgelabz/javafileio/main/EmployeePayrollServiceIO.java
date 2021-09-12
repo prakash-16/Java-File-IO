@@ -32,4 +32,15 @@ public class EmployeePayrollServiceIO {
 			x.printStackTrace();
 		}
 	}
+	
+	public int countEntry() {
+		int entry;
+		try {
+			entry = Files.lines((new File("payroll-file.txt").toPath()).count();
+		}
+		catch(IOException x) {
+			x.printStackTrace();
+		}
+		return entry;
+	}
 }
