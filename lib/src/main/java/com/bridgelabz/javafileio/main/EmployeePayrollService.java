@@ -34,13 +34,19 @@ public class EmployeePayrollService {
 		}
 	}
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		employeePayrollData = new ArrayList<>();
 		EmployeePayrollService employee = new EmployeePayrollService();
 		Scanner consoleInputReader = new Scanner(System.in);
 		System.out.println(System.getProperty("user.home"));
 		employee.readData(consoleInputReader);
 		employee.writeData(IOService.FILE_IO);
-	}*/
+	}
+	
+	public void printData(IOService ioService) {
+		if(ioService.equals(IOService.FILE_IO)) {
+			new EmployeePayrollServiceIO().printData();
+		}
+	}
 
 }
