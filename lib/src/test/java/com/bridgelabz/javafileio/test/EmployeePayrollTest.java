@@ -24,7 +24,8 @@ public class EmployeePayrollTest {
 				(ArrayList<EmployeePayroll>) Arrays.asList(arrOfEmp));
 		empService.writeData(IOService.FILE_IO);
 		empService.printData(IOService.FILE_IO);
-
+		int entry = empService.countEntry(IOService.FILE_IO);
+		Assert.assertEquals(3, entry);
 	}
 
 }
