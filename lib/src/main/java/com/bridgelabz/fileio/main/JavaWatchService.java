@@ -1,6 +1,8 @@
 package com.bridgelabz.fileio.main;
 
 import java.io.IOException;
+
+
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -13,11 +15,12 @@ import java.nio.file.WatchService;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
+
 public class JavaWatchService {
 
-	private Kind<?> Entry_Create;
-	private Kind<?> Entry_Delete;
-	private Kind<?> Entry_Modify;
 	private WatchService watcher;
 	private HashMap<WatchKey, Path> dirWatchers;
 
@@ -41,11 +44,11 @@ public class JavaWatchService {
 
 	private void registerDirWatchers(Path dir) throws IOException {
 		// TODO Auto-generated method stub
-		WatchKey key = dir.register(watcher, Entry_Create, Entry_Delete, Entry_Modify);
+		WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
 		dirWatchers.put(key, dir);
 	}
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void processEvents() {
 		while (true) {
 			WatchKey key;
@@ -64,7 +67,7 @@ public class JavaWatchService {
 				Path child = dir.resolve(name);
 				System.out.format("%s: %s\n", event.kind().name(), child);
 
-				if (kind == Entry_Create) {
+				if (kind == ENTRY_CREATE) {
 					try {
 						if (Files.isDirectory(child)) {
 							scanAndRegiterDirectories(child);
@@ -72,7 +75,7 @@ public class JavaWatchService {
 					} catch (IOException x) {
 
 					}
-				} else if (kind.equals(Entry_Delete)) {
+				} else if (kind.equals(ENTRY_DELETE)) {
 					if (Files.isDirectory(child))
 						dirWatchers.remove(key);
 				}
